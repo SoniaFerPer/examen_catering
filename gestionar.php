@@ -32,6 +32,21 @@ if ($accion === 'eliminar' && isset($_GET['indice'])) {
     exit;
 }
 
+// ===== APARTADO 9: Modificar unidades (+/-) =====
+if ($accion === 'modificar_unidades' && isset($_GET['indice']) && isset($_GET['delta'])) {
+    $indice = (int)$_GET['indice'];
+    $delta = (int)$_GET['delta'];
+    if (isset($_SESSION['servicios'][$indice])) {
+        $nuevas = $_SESSION['servicios'][$indice]['unidades'] + $delta;
+        if ($nuevas >= 1) {
+            $_SESSION['servicios'][$indice]['unidades'] = $nuevas;
+            incrementarVersion();
+        }
+    }
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
 // ===== APARTADO 6: Añadir servicio con validación =====
 $errores = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'anadir') {
