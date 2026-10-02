@@ -11,6 +11,27 @@ if (!isset($_SESSION['servicios'])) {
 function incrementarVersion() {
     $_SESSION['numero_version']++;
 }
+
+// ===== APARTADO 8: Eliminar todo =====
+$accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
+if ($accion === 'eliminar_todo') {
+    $_SESSION['servicios'] = [];
+    $_SESSION['numero_version'] = 1;
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+// ===== APARTADO 7: Eliminar servicio =====
+if ($accion === 'eliminar' && isset($_GET['indice'])) {
+    $indice = (int)$_GET['indice'];
+    if (isset($_SESSION['servicios'][$indice])) {
+        array_splice($_SESSION['servicios'], $indice, 1);
+        incrementarVersion();
+    }
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
 // ===== APARTADO 6: Añadir servicio con validación =====
 $errores = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accion === 'anadir') {
@@ -138,3 +159,12 @@ $neto = $base + $iva;
     <label>Precio unidad: <input type="number" step="0.01" name="precio_unidad" min="0" required></label><br>
     <button type="submit">Añadir</button>
 </form>
+
+<!-- ===== APARTADO 8: Botón eliminar todo ===== -->
+<form method="post" action="">
+    <input type="hidden" name="accion" value="eliminar_todo">
+    <button type="submit" onclick="return confirm('¿Eliminar todos los datos?');">Eliminar todo</button>
+</form>
+
+</body>
+</html>
