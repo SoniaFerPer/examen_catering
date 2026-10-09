@@ -9,3 +9,6 @@ Aplicación PHP para gestionar un presupuesto de catering usando sesiones.
 1. colocar en un serviro PHP
 2. Abrir 'imprimir.php' para ver el ejemplo estatico.
 3. Abrir `gestionar.php`para la version interactiva.
+
+## Ejemplo fork - cfergar586
+Hola, esto es una prueba de trabajo colaborativo
